@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 
 import { RestaurantService } from '../services/restaurant';
@@ -9,15 +10,18 @@ import { CartService } from '../services/cart';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule,FormsModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
 
-  restaurants: any[] = [];
-  foodItems: any[] = [];
-  selectedRestaurant: any = null;
+ restaurants: any[] = [];
+filteredRestaurants: any[] = [];
+foodItems: any[] = [];
+selectedRestaurant: any = null;
+
+searchText = '';
 
   constructor(
     private restaurantService: RestaurantService,
@@ -35,9 +39,10 @@ export class Home implements OnInit {
 
         console.log('Restaurants received:', data);
 
-        this.restaurants = data;
+       this.restaurants = data;
+this.filteredRestaurants = data;
 
-        this.cdr.detectChanges();
+this.cdr.detectChanges();
 
       },
 
@@ -53,6 +58,26 @@ export class Home implements OnInit {
     });
 
   }
+
+
+
+
+  searchRestaurants(): void {
+  const search = this.searchText.trim().toLowerCase();
+
+  if (!search) {
+    this.filteredRestaurants = this.restaurants;
+    return;
+  }
+
+  this.filteredRestaurants = this.restaurants.filter(
+    restaurant =>
+      restaurant.name?.toLowerCase().includes(search) ||
+      restaurant.city?.toLowerCase().includes(search)
+  );
+}
+
+
 
   loadFoodItems(restaurant: any): void {
 
