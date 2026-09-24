@@ -726,3 +726,32 @@ body {
   }
 
 }
+
+
+
+/* No Search Results */
+
+.no-results {
+  text-align: center;
+  padding: 50px 20px;
+  margin-top: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eeeeee;
+}
+
+.no-results-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.no-results h3 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.no-results p {
+  margin: 0;
+  color: #777;
+  font-size: 15px;
+}

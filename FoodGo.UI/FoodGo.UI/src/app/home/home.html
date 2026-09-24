@@ -23,10 +23,12 @@
 
       <input
         type="text"
-        placeholder="Search for food or restaurants..."
+        [(ngModel)]="searchText"
+        placeholder="Search for restaurants..."
+        (keyup.enter)="searchRestaurants()"
       />
 
-      <button>
+      <button (click)="searchRestaurants()">
         Search
       </button>
 
@@ -41,10 +43,12 @@
 <section class="section">
 
   <div class="section-heading">
+
     <div>
       <span class="section-label">WHAT ARE YOU CRAVING?</span>
       <h2>Explore Categories</h2>
     </div>
+
   </div>
 
   <div class="categories">
@@ -95,34 +99,35 @@
     </div>
 
     <span class="restaurant-count">
-      {{ restaurants.length }} restaurants
+      {{ filteredRestaurants.length }} restaurants
     </span>
 
   </div>
 
 
+  <!-- Restaurant Cards -->
   <div class="restaurant-grid">
 
     <div
       class="restaurant-card"
-      *ngFor="let restaurant of restaurants">
+      *ngFor="let restaurant of filteredRestaurants">
 
       <div class="restaurant-image">
 
         <img
-  [src]="
-    restaurant.name === 'Paradise Biryani'
-      ? 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Biryani%20in%20Hyderabad.jpg'
-      : restaurant.name === 'Bawarchi'
-  ? 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Tandoori_Chicken_(2).jpg'
-      : restaurant.name === 'Dominos'
-      ? 'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80'
-      : restaurant.name === 'Mehfil'
-      ? 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80'
-      : 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'
-  "
-  [alt]="restaurant.name"
-/>
+          [src]="
+            restaurant.name === 'Paradise Biryani'
+              ? 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Biryani%20in%20Hyderabad.jpg'
+              : restaurant.name === 'Bawarchi'
+              ? 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Tandoori_Chicken_(2).jpg'
+              : restaurant.name === 'Dominos'
+              ? 'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80'
+              : restaurant.name === 'Mehfil'
+              ? 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80'
+              : 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'
+          "
+          [alt]="restaurant.name"
+        />
 
         <span class="restaurant-badge">
           ⭐ {{ restaurant.rating }}
@@ -133,7 +138,9 @@
 
       <div class="restaurant-info">
 
-        <h3>{{ restaurant.name }}</h3>
+        <h3>
+          {{ restaurant.name }}
+        </h3>
 
         <p class="restaurant-location">
           📍 {{ restaurant.city }}
@@ -163,6 +170,29 @@
 
   </div>
 
+
+  <!-- No Search Results -->
+  @if (filteredRestaurants.length === 0) {
+
+    <div class="no-results">
+
+      <div class="no-results-icon">
+        🔍
+      </div>
+
+      <h3>
+        No restaurants found
+      </h3>
+
+      <p>
+        We couldn't find any restaurant matching
+        "{{ searchText }}".
+      </p>
+
+    </div>
+
+  }
+
 </section>
 
 
@@ -174,11 +204,15 @@
     <div class="section-heading">
 
       <div>
-        <span class="section-label">MENU</span>
+
+        <span class="section-label">
+          MENU
+        </span>
 
         <h2>
           {{ selectedRestaurant.name }}
         </h2>
+
       </div>
 
       <span class="menu-location">
@@ -205,9 +239,11 @@
             />
 
             @if (!food.isAvailable) {
+
               <span class="unavailable-badge">
                 Currently unavailable
               </span>
+
             }
 
           </div>
@@ -215,9 +251,13 @@
 
           <div class="food-info">
 
-            <h3>{{ food.name }}</h3>
+            <h3>
+              {{ food.name }}
+            </h3>
 
-            <p>{{ food.description }}</p>
+            <p>
+              {{ food.description }}
+            </p>
 
             <div class="food-bottom">
 
@@ -231,9 +271,13 @@
                 (click)="addToCart(food)">
 
                 @if (food.isAvailable) {
+
                   + Add to Cart
+
                 } @else {
+
                   Unavailable
+
                 }
 
               </button>
