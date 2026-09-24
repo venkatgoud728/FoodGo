@@ -1,0 +1,253 @@
+<!-- Hero Section -->
+<section class="hero">
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <span class="hero-badge">🍽️ Welcome to FoodGo</span>
+
+    <h1>
+      Delicious food,<br>
+      <span>delivered to you.</span>
+    </h1>
+
+    <p>
+      Discover the best restaurants near you and enjoy
+      your favorite meals delivered straight to your door.
+    </p>
+
+    <div class="search-box">
+
+      <span class="search-icon">🔍</span>
+
+      <input
+        type="text"
+        placeholder="Search for food or restaurants..."
+      />
+
+      <button>
+        Search
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Categories -->
+<section class="section">
+
+  <div class="section-heading">
+    <div>
+      <span class="section-label">WHAT ARE YOU CRAVING?</span>
+      <h2>Explore Categories</h2>
+    </div>
+  </div>
+
+  <div class="categories">
+
+    <div class="category-card">
+      <div class="category-icon biryani-icon">🍛</div>
+      <span>Biryani</span>
+    </div>
+
+    <div class="category-card">
+      <div class="category-icon pizza-icon">🍕</div>
+      <span>Pizza</span>
+    </div>
+
+    <div class="category-card">
+      <div class="category-icon burger-icon">🍔</div>
+      <span>Burgers</span>
+    </div>
+
+    <div class="category-card">
+      <div class="category-icon chinese-icon">🍜</div>
+      <span>Chinese</span>
+    </div>
+
+    <div class="category-card">
+      <div class="category-icon dessert-icon">🍰</div>
+      <span>Desserts</span>
+    </div>
+
+    <div class="category-card">
+      <div class="category-icon south-icon">🥘</div>
+      <span>South Indian</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Restaurants -->
+<section class="section restaurants-section">
+
+  <div class="section-heading">
+
+    <div>
+      <span class="section-label">DISCOVER</span>
+      <h2>Popular Restaurants</h2>
+    </div>
+
+    <span class="restaurant-count">
+      {{ restaurants.length }} restaurants
+    </span>
+
+  </div>
+
+
+  <div class="restaurant-grid">
+
+    <div
+      class="restaurant-card"
+      *ngFor="let restaurant of restaurants">
+
+      <div class="restaurant-image">
+
+        <img
+  [src]="
+    restaurant.name === 'Paradise Biryani'
+      ? 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Biryani%20in%20Hyderabad.jpg'
+      : restaurant.name === 'Bawarchi'
+  ? 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Tandoori_Chicken_(2).jpg'
+      : restaurant.name === 'Dominos'
+      ? 'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80'
+      : restaurant.name === 'Mehfil'
+      ? 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80'
+      : 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'
+  "
+  [alt]="restaurant.name"
+/>
+
+        <span class="restaurant-badge">
+          ⭐ {{ restaurant.rating }}
+        </span>
+
+      </div>
+
+
+      <div class="restaurant-info">
+
+        <h3>{{ restaurant.name }}</h3>
+
+        <p class="restaurant-location">
+          📍 {{ restaurant.city }}
+        </p>
+
+        <div class="restaurant-details">
+
+          <span>
+            ⭐ {{ restaurant.rating }}
+          </span>
+
+          <span>
+            🕐 {{ restaurant.deliveryTime }}
+          </span>
+
+        </div>
+
+        <button
+          class="menu-button"
+          (click)="loadFoodItems(restaurant)">
+          View Menu →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- Restaurant Menu -->
+@if (selectedRestaurant) {
+
+  <section class="section menu-section">
+
+    <div class="section-heading">
+
+      <div>
+        <span class="section-label">MENU</span>
+
+        <h2>
+          {{ selectedRestaurant.name }}
+        </h2>
+      </div>
+
+      <span class="menu-location">
+        📍 {{ selectedRestaurant.city }}
+      </span>
+
+    </div>
+
+
+    <div class="food-grid">
+
+      @for (food of foodItems; track food.foodItemId) {
+
+        <div class="food-card">
+
+          <div class="food-image">
+
+            <img
+              [src]="
+                food.imageUrl ||
+                'https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=900&q=80'
+              "
+              [alt]="food.name"
+            />
+
+            @if (!food.isAvailable) {
+              <span class="unavailable-badge">
+                Currently unavailable
+              </span>
+            }
+
+          </div>
+
+
+          <div class="food-info">
+
+            <h3>{{ food.name }}</h3>
+
+            <p>{{ food.description }}</p>
+
+            <div class="food-bottom">
+
+              <strong>
+                ₹{{ food.price }}
+              </strong>
+
+              <button
+                class="add-button"
+                [disabled]="!food.isAvailable"
+                (click)="addToCart(food)">
+
+                @if (food.isAvailable) {
+                  + Add to Cart
+                } @else {
+                  Unavailable
+                }
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+}

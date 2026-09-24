@@ -1,0 +1,89 @@
+<section class="orders-section">
+
+  <h2>📦 My Orders</h2>
+
+  @if (loading) {
+    <p class="message">
+      Loading orders...
+    </p>
+  }
+
+  @if (errorMessage) {
+    <p class="error-message">
+      {{ errorMessage }}
+    </p>
+  }
+
+  @if (!loading && !errorMessage && orders.length === 0) {
+
+    <div class="empty-orders">
+
+      <h3>No orders yet</h3>
+
+      <p>
+        You haven't placed any orders yet.
+      </p>
+
+      <a routerLink="/">
+        Start Ordering
+      </a>
+
+    </div>
+
+  }
+
+  @if (!loading && orders.length > 0) {
+
+    <div class="orders-container">
+
+      @for (order of orders; track order.orderId) {
+
+        <div class="order-card">
+
+          <div class="order-header">
+
+            <div>
+              <h3>
+                Order #{{ order.orderId }}
+              </h3>
+
+              <p>
+                {{ order.orderDate | date:'medium' }}
+              </p>
+            </div>
+
+            <span class="order-status">
+              {{ order.status }}
+            </span>
+
+          </div>
+
+          <div class="order-details">
+
+            <div>
+              <span>Order Total</span>
+
+              <strong>
+                ₹{{ order.totalAmount }}
+              </strong>
+            </div>
+
+            <div>
+              <span>Restaurant</span>
+
+              <strong>
+                Restaurant #{{ order.restaurantId }}
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</section>

@@ -1,0 +1,69 @@
+<section class="login-section">
+
+  <div class="login-card">
+
+    <h2>🔐 Login to FoodGo</h2>
+
+    <p class="subtitle">
+      Welcome back! Please login to continue.
+    </p>
+
+    <form (ngSubmit)="login()">
+
+      <div class="form-group">
+        <label for="email">Email</label>
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      @if (errorMessage) {
+        <p class="error-message">
+          {{ errorMessage }}
+        </p>
+      }
+
+      @if (successMessage) {
+        <p class="success-message">
+          {{ successMessage }}
+        </p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loading"
+      >
+        @if (loading) {
+          Logging in...
+        } @else {
+          Login
+        }
+      </button>
+
+    </form>
+
+    <p class="register-link">
+      Don't have an account?
+      <a href="#">Register</a>
+    </p>
+
+  </div>
+
+</section>

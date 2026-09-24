@@ -1,0 +1,6 @@
+@FoodGo.API_HostAddress = http://localhost:5064
+
+GET {{FoodGo.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

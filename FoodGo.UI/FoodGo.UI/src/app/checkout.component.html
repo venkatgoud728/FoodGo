@@ -1,0 +1,134 @@
+<section class="checkout-section">
+
+  <h2>🧾 Checkout</h2>
+
+  @if (loading) {
+    <p class="message">Loading checkout...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error-message">
+      {{ errorMessage }}
+    </p>
+  }
+
+  @if (successMessage) {
+    <p class="success-message">
+      {{ successMessage }}
+    </p>
+  }
+
+  @if (!loading) {
+
+    <div class="checkout-container">
+
+      <!-- Address Section -->
+      <div class="checkout-card">
+
+        <h3>📍 Delivery Address</h3>
+
+        @if (addresses.length === 0) {
+
+          <p>
+            No address found for your account.
+          </p>
+
+        } @else {
+
+          @for (address of addresses; track address.addressId) {
+
+            <label class="address-option">
+
+              <input
+                type="radio"
+                name="address"
+                [value]="address.addressId"
+                [(ngModel)]="selectedAddressId"
+              />
+
+              <div class="address-details">
+                <strong>
+                  {{ address.addressLine }}
+                </strong>
+
+                <span>
+                  {{ address.city }},
+                  {{ address.state }}
+                  - {{ address.pincode }}
+                </span>
+              </div>
+
+            </label>
+
+          }
+
+        }
+
+      </div>
+
+
+      <!-- Order Summary -->
+      <div class="checkout-card">
+
+        <h3>🛒 Order Summary</h3>
+
+        @if (cart && cart.items?.length > 0) {
+
+          @for (item of cart.items; track item.cartItemId) {
+
+            <div class="summary-item">
+
+              <div>
+                <strong>{{ item.name }}</strong>
+
+                <span>
+                  ₹{{ item.price }} × {{ item.quantity }}
+                </span>
+              </div>
+
+              <strong>
+                ₹{{ item.subTotal }}
+              </strong>
+
+            </div>
+
+          }
+
+          <div class="summary-total">
+            <strong>Total</strong>
+            <strong>₹{{ cart.total }}</strong>
+          </div>
+
+        } @else {
+
+          <p>Your cart is empty.</p>
+
+        }
+
+      </div>
+
+
+      <!-- Place Order -->
+      <div class="place-order-section">
+
+        <button
+          type="button"
+          (click)="placeOrder()"
+          [disabled]="placingOrder || !addresses.length"
+        >
+
+          @if (placingOrder) {
+            Placing Order...
+          } @else {
+            Place Order
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+</section>

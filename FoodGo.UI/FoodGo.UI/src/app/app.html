@@ -1,0 +1,167 @@
+<!-- =========================================
+     FOODGO NAVBAR
+========================================= -->
+
+<header class="navbar">
+
+  <!-- FoodGo Logo -->
+  <a routerLink="/" class="foodgo-logo">
+
+    <div class="logo-icon">
+      🍴
+    </div>
+
+    <div class="logo-text">
+
+      <div class="logo-name">
+        Food<span>Go</span>
+      </div>
+
+      <div class="logo-tagline">
+        Good Food · Happy You 😊
+      </div>
+
+    </div>
+
+  </a>
+
+
+  <!-- Navigation -->
+  <nav class="nav-links">
+
+    <!-- Home -->
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+
+      🏠
+      <span>Home</span>
+
+    </a>
+
+
+    <!-- Restaurants -->
+    <a routerLink="/">
+
+      🍴
+      <span>Restaurants</span>
+
+    </a>
+
+
+    <!-- Orders -->
+    <a routerLink="/orders">
+
+      📋
+      <span>Orders</span>
+
+    </a>
+
+
+    <!-- Cart -->
+    <a routerLink="/cart">
+
+      🛒
+      <span>Cart ({{ cartItemCount }})</span>
+
+    </a>
+
+
+    <!-- Logged-in User -->
+    @if (isLoggedIn) {
+
+      <span class="welcome-user">
+
+        👤
+        Welcome, {{ loggedInUser?.name }}
+
+      </span>
+
+
+      <!-- Logout -->
+      <a
+        href="#"
+        class="logout-button"
+        (click)="logout()">
+
+        Logout
+
+      </a>
+
+    } @else {
+
+      <!-- Login -->
+      <a routerLink="/login">
+
+        Login
+
+      </a>
+
+    }
+
+  </nav>
+
+</header>
+
+
+<!-- =========================================
+     PAGE CONTENT
+========================================= -->
+
+<main class="main-content">
+
+  <router-outlet></router-outlet>
+
+</main>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+  <div class="footer-content">
+
+    <div class="footer-brand">
+
+      <h2>
+        🍴 Food<span>Go</span>
+      </h2>
+
+      <p>
+        Good Food · Happy You 😊
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a routerLink="/">
+        Home
+      </a>
+
+      <a routerLink="/orders">
+        Orders
+      </a>
+
+      <a routerLink="/cart">
+        Cart
+      </a>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <p>
+        © 2026 FoodGo. All rights reserved.
+      </p>
+
+    </div>
+
+  </div>
+
+</footer>

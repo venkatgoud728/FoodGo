@@ -1,0 +1,91 @@
+<section class="cart-section">
+
+  <h2>🛒 Your Cart</h2>
+
+  @if (loading) {
+    <p class="message">Loading cart...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && cart && cart.items?.length === 0) {
+
+    <div class="empty-cart">
+      <h3>Your cart is empty</h3>
+      <p>Add some delicious food to your cart.</p>
+    </div>
+
+  }
+
+  @if (!loading && cart && cart.items?.length > 0) {
+
+    <div class="cart-container">
+
+      @for (item of cart.items; track item.cartItemId) {
+
+        <div class="cart-item">
+
+          <div class="item-info">
+
+            <h3>{{ item.name }}</h3>
+
+            <p>Price: ₹{{ item.price }}</p>
+
+          </div>
+
+          <div class="quantity-controls">
+
+            <button
+              (click)="decreaseQuantity(item)">
+              −
+            </button>
+
+            <span>
+              {{ item.quantity }}
+            </span>
+
+            <button
+              (click)="increaseQuantity(item)">
+              +
+            </button>
+
+          </div>
+
+          <div class="item-total">
+
+            <strong>
+              ₹{{ item.subTotal }}
+            </strong>
+
+          </div>
+
+          <button
+            class="remove-button"
+            (click)="removeItem(item)">
+            Remove
+          </button>
+
+        </div>
+
+      }
+
+      <div class="cart-total">
+
+  <h2>Total: ₹{{ cart.total }}</h2>
+
+  <a
+    routerLink="/checkout"
+    class="checkout-button"
+  >
+    Proceed to Checkout
+  </a>
+
+</div>
+
+    </div>
+
+  }
+
+</section>

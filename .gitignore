@@ -1,0 +1,28 @@
+# Angular
+FoodGo.UI/FoodGo.UI/node_modules/
+FoodGo.UI/FoodGo.UI/.angular/
+FoodGo.UI/FoodGo.UI/dist/
+FoodGo.UI/FoodGo.UI/.cache/
+
+# ASP.NET Core
+FoodGo.API/FoodGo.API/bin/
+FoodGo.API/FoodGo.API/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
